@@ -1,4 +1,4 @@
-import { Space, DatePicker, Input, Layout, Row, Button, Flex, Menu, ConfigProvider, Dropdown } from 'antd';
+import { Space, DatePicker, Input, Layout, Button, Flex, Menu, ConfigProvider, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import './App.css';
 import PdfDocument from './components/PdfDocument';
@@ -8,8 +8,6 @@ import { useTranslation } from 'react-i18next';
 import frCA from 'antd/locale/fr_CA';
 import enCA from 'antd/locale/en_US';
 import { Helmet } from 'react-helmet';
-
-
 
 
 const { Header, Footer, Sider, Content } = Layout;

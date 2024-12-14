@@ -2,6 +2,7 @@ import React from 'react';
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 import { PDFViewer } from '@react-pdf/renderer';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 // Create styles
 const styles = StyleSheet.create({
@@ -17,20 +18,23 @@ const styles = StyleSheet.create({
 });
 
 // Create Document Component
-const PdfDocument = ({ name, age }) => (
+const PdfDocument = ({ name, age }) => {
+  
+  const { t } = useTranslation();
+  return (
   <PDFViewer height='100%' width='100%'>
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          <Text>Name: {name}</Text>
+          <Text>{t('name')}: {name}</Text>
         </View>
         <View style={styles.section}>
-          <Text>Age: {age}</Text>
+          <Text>{t('age')}: {age}</Text>
         </View>
       </Page>
     </Document>
   </PDFViewer>
-);
+)};
 
 PdfDocument.propsTypes = {
   name: PropTypes.string.isRequired,

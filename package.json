@@ -1,6 +1,7 @@
 {
   "name": "onip-cal",
   "version": "0.1.0",
+  "homepage": "https://karanvikas.github.io/onip",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.5.2",

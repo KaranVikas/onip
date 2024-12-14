@@ -7,6 +7,8 @@ import { differenceInYears, parseISO } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import frCA from 'antd/locale/fr_CA';
 import enCA from 'antd/locale/en_US';
+import { Helmet } from 'react-helmet';
+
 
 
 
@@ -88,6 +90,9 @@ const App = () => {
 
   return (
     <ConfigProvider locale={antdLocale}>
+      <Helmet>
+        <title>{t('welcome')}</title>
+      </Helmet>
       <Layout style={layoutStyle}>
         <Sider width="25%" style={siderStyle}>
           <Flex gap="middle" justify='center' align='center' vertical>

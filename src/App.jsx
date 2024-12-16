@@ -1,64 +1,95 @@
-import React from 'react'
-import Dyanform from './components/QuesForm/Dyanform'
-import { Layout } from 'antd';
-const { Header, Footer, Sider, Content } = Layout;
+import { Layout, Button, Menu, ConfigProvider, Dropdown } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import frCA from 'antd/locale/fr_CA';
+import enCA from 'antd/locale/en_US';
+import { Route, Routes } from 'react-router-dom';
+import ForeignWorkerStream from './pages/ForeginWorkerStream';
+import InDemandStream from './pages/InDemandStream';
+import InternationalStudentStream from './pages/InternationalStudentStream';
+import MasterStudentStream from './pages/MasterStream';
+import PHDStream from './pages/PHDStream/PHDStream';
+import Home from './pages/Home';
 
+
+const { Header, Footer, Sider, Content } = Layout;
 
 const headerStyle = {
   textAlign: 'center',
   color: '#fff',
   height: 64,
   paddingInline: 48,
-  lineHeight: '80px',
-  
+  lineHeight: '64px',
+  backgroundColor: '#4096ff',
 };
-const contentStyle = {
-  margin: '30px',
-  // textAlign: 'center',
-  minHeight: 120,
-  lineHeight: '120px',
-  overflow:'scroll'
- 
-};
-const siderStyle = {
-  textAlign: 'center',
-  lineHeight: '120px',
-  color: '#fff',
-  backgroundColor: '#1677ff',
-};
+
 const footerStyle = {
   textAlign: 'center',
   color: '#fff',
   backgroundColor: '#4096ff',
 };
+
 const layoutStyle = {
-  borderRadius: 8,
-  height:'100vh',
-  overflow:'hidden'
+  overflow: 'hidden',
+  height: '100vh',
 };
 
-
 const App = () => {
+
+
+  const { t, i18n } = useTranslation();
+  const [language, setLanguage] = useState('en');
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    setLanguage(lng);
+  };
+
+  const languageMenu = (
+    <Menu onClick={({ key }) => changeLanguage(key)}>
+      <Menu.Item key="en">
+        🇬🇧 English
+      </Menu.Item>
+      <Menu.Item key="fr">
+        🇫🇷 Français
+      </Menu.Item>
+    </Menu>
+  );
+
+  // Select Ant Design locale based on selected language
+  const antdLocale = language === 'en' ? enCA : frCA;
+
   return (
-    <Layout style={layoutStyle}>
-      <Header style={headerStyle}>Header</Header>
-      <Layout>
-        <Content style={contentStyle}>
-          <h2> Check your score </h2>
-          <h3>
-            This website will help you to calculate your
-            score based on the answer you provide below 
-          </h3>
-          {/* <QuesForm/> */}
-          <Dyanform />
-        </Content>
-        <Sider width="40%" style={siderStyle}>
-          Sider
-        </Sider>
+    <ConfigProvider locale={antdLocale}>
+      <Layout style={layoutStyle}>
+        <Layout>
+          <Header style={headerStyle}>
+            <Menu mode="horizontal">
+              <Menu.Item key="1">{t('welcome')}</Menu.Item>
+              <Menu.Item key="2">
+                <Dropdown overlay={languageMenu} trigger={['click']}>
+                  <Button>
+                    {language === 'en' ? "🇬🇧 English" : "🇫🇷 Français"} <DownOutlined />
+                  </Button>
+                </Dropdown>
+              </Menu.Item>
+            </Menu>
+          </Header>
+          <Routes>
+            <Route path='/' element={<Home/>} />
+            <Route path='/foreign_worker_stream' element={<ForeignWorkerStream/>} />
+            <Route path='/indemand_stream' element={<InDemandStream/>}/>
+            <Route path='/int_stream' element={<InternationalStudentStream />} />
+            <Route path='/master_stream' element={<MasterStudentStream />} />
+            <Route path='/phd_stream' element={<PHDStream /> }/>
+            <Route path='*' element={<h2>404 - Page not found</h2>} />
+          </Routes>
+          <Footer style={footerStyle}> This is footer</Footer>
+        </Layout>
       </Layout>
-      <Footer style={footerStyle}>Footer</Footer>
-  </Layout>
-  )
+    </ConfigProvider>
+  );
 }
 
-export default App
+export default App;

@@ -3,5 +3,10 @@
   "language": "Langue",
   "switchLanguage": "Changer de langue",
   "name": "Nom",
-  "age": "Ago"
+  "age": "Ago",
+  "foreign_worker_stream": "Foreign Worker Stream",
+  "indemand_stream": "In Demand Stream",
+  "int_stream": "Int Stream",
+  "master_stream": "Master Stream",
+  "home": "Home"
 }

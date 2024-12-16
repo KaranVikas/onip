@@ -2,6 +2,12 @@
   "welcome": "Welcome to React!",
   "language": "Language",
   "switchLanguage": "Switch Language",
-  "name": "Name1",
-  "age": "Age2"
+  "name": "Name",
+  "age": "Age",
+  "foreign_worker_stream": "Foreign Worker Stream",
+  "indemand_stream": "In Demand Stream",
+  "int_stream": "International Stream",
+  "master_stream": "Master Stream",
+  "phd_stream":"PHD Stream",
+  "home": "Home"
 }

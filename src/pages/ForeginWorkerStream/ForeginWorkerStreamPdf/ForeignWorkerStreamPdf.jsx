@@ -22,32 +22,40 @@ const ForeignWorkerStreamPdf = ({answer}) => {
     <Document>
       <Page size="A4">
         <View style={styles.section}>
-          <Text>Your score report</Text>
+        <Text style={{marginBottom:"20px"}}>Foreign Worker Stream</Text>
+          <Text style={{ marginBottom:'15px', textAlign:"center"}}>Your score report</Text>
+         
           {Object.keys(answer).length === 0 ? (
-        <Text>No answers selected yet.</Text>
-          ) : (
-            Object.entries(answer).map(([question, answer], index) => (
-              <View key={index} style={{ marginVertical: 5 }}>
-                <Text>
-                  <Text style={{ fontWeight: "bold" }}>{question}: </Text>
-                  {answer}
-                </Text>
-              </View>
-            ))
-          )}
+            <Text>No answers selected yet.</Text>
+              ) : (
+                Object.entries(answer).map(([question, answer], index) => (
+                  <View key={index} style={{ marginVertical: 5 , marginHorizontal: 7}}>
+                    <View style={{display:"flex", flexDirection:'row', justifyContent:'space-between' }}>
+                      <Text style={{ fontWeight: "bold" }}>{question}: </Text>
+                      <Text style={{ fontWeight: "bold" }}>{answer} </Text>
+                    </View>
+                  </View>
+                ))
+              )
+          }
+          
+            <View style={{ display: "flex", justifyContent: 'center', marginVertical: 5}}>
+              {
+                answer.languageKnowledge && (
+                  <>
+                    <Text style={{ fontWeight: "bold" }}>Language Skills</Text>
+                    <View style={{display:"flex", flexDirection:'row', justifyContent:'space-between',marginVertical: 5, marginLeft:10}}>
+                      <Text style={{ fontWeight: "bold" }}>Two Official language </Text>
+                      <Text style={{ fontWeight: "bold" }}> {answer.languageKnowledge} </Text> 
+                    </View>
+                  </>
+                )
+              }
+
+            </View>
+
         </View>
-        {/* <View style={styles.section}>
-          <Text>{t('foreign_worker_stream')}</Text>
-        </View>
-        <View style={styles.section}>
-          <Text>{t('Education')}: {name}</Text>
-        </View>
-        <View style={styles.section}>
-          <Text>{t('Language Skills')}: {age}</Text>
-        </View>
-        <View style={styles.section}>
-          <Text>{t('Work Experience')}: {age}</Text>
-        </View> */}
+       
       </Page>
     </Document>
   </PDFViewer>

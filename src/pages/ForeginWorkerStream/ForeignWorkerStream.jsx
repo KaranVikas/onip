@@ -85,9 +85,10 @@ const ForeignWorkerStream = () => {
     setTotalScore((prevScore) => prevScore + score); // Update total score
     console.log("score")
      // Save answer to the answers state
+     
     setAnswers((prevAnswers) => ({
       ...prevAnswers,
-      [question]: score,   
+      [value]: score,   
     })
   );
   console.log(score)
@@ -206,7 +207,14 @@ const ForeignWorkerStream = () => {
         <Button onClick={showModal}>
         Open Modal
         </Button>
-        <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <Modal 
+          title="Basic Modal"
+          open={isModalOpen} 
+          onOk={handleOk} 
+          onCancel={handleCancel}
+          width={700}
+          // height={800}
+          >
           <ForeignWorkerStreamPdf answer={answer}/>
         </Modal>
           

@@ -1,11 +1,12 @@
-import { Layout } from 'antd';
+import { Layout, Button, Modal } from 'antd';
 import { Helmet } from 'react-helmet';
 import ForeignWorkerStreamPdf from './ForeginWorkerStreamPdf';
 import { useTranslation } from 'react-i18next';
-import { Form, Select, Radio  } from 'antd/lib';
+import { Form, Select} from 'antd/lib';
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'; 
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 
 const contentStyle = {
   textAlign: 'center',
@@ -17,65 +18,80 @@ const contentStyle = {
   overflow: 'scroll'
 };
 
-// const siderStyle = {
-//   textAlign: 'center',
-//   lineHeight: '120px',
-//   color: '#fff',
-//   backgroundColor: '#1677ff',
-// };
-
 const ForeignWorkerStream = () => {
   const { t } = useTranslation();
   const [componentSize, setComponentSize] = useState('default');
   const [totalScore, setTotalScore] = useState(0);
+  const [answer, setAnswers] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Mapping of answers to scores
   const scoreMapping = {
     workPermitStatus: {
       "With valid work permit": 10,
-      "Without valid work permit": 5,
+      "Without valid work permit": 0,
     },
     occupation: {
       "With valid work permit": 10,
-      "Without valid work permit": 5,
+      "Without valid work permit": 0,
     },
     hourlyWage: {
-      "Less than $20": 5,
-      "$20 to $24.99": 10,
-      "$25 to $29.99": 15,
-      "$30 to $34.99": 20,
-      "$35 to $39.99": 25,
-      "$40 or higher": 30,
+      "Less than $20": 0,
+      "$20 to $24.99": 5,
+      "$25 to $29.99": 6,
+      "$30 to $34.99": 7,
+      "$35 to $39.99": 8,
+      "$40 or higher": 10,
     },
     workDuration: {
-      "6 months or more": 20,
-      "Less than 6 months": 10,
+      "6 months or more": 3,
+      "Less than 6 months": 0,
     },
     jobLocation: {
-      "Northern Ontario": 30,
-      "Other areas outside Greater Toronto Area (except Northern Ontario)": 20,
-      "Greater Toronto Area excluding Toronto": 15,
-      "Toronto": 10,
+      "Northern Ontario": 10,
+      "Other areas outside Greater Toronto Area (except Northern Ontario)": 8,
+      "Greater Toronto Area excluding Toronto": 3,
+      "Toronto": 0,
     },
     earningsHistory: {
-      "Less than $40k earnings in a year": 10,
-      "More than $40k earnings in a year": 20,
+      "Less than $40k earnings in a year": 0,
+      "More than $40k earnings in a year": 3,
     },
     languageKnowledge: {
-      "Two official languages": 20,
-      "One official language": 10,
+      "Two official languages": 10,
+      "One official language": 0,
     },
     languageAbility: {
-      "CLB 9 or higher": 30,
-      "CLB 8": 20,
-      "CLB 7": 15,
-      "CLB 6 or lower": 10,
+      "CLB 9 or higher": 10,
+      "CLB 8": 6,
+      "CLB 7": 4,
+      "CLB 6 or lower": 0,
     },
+  };
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
   };
 
   const handleScoreChange = (question, value) => {
     const score = scoreMapping[question]?.[value] || 0; // Get score for selected answer
     setTotalScore((prevScore) => prevScore + score); // Update total score
+    console.log("score")
+     // Save answer to the answers state
+    setAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [question]: score,   
+    })
+  );
+  console.log(score)
+  console.log({answer})
   };
 
   const onFormLayoutChange = ({ size }) => {
@@ -183,14 +199,22 @@ const ForeignWorkerStream = () => {
           </Select>
         </Form.Item>
         
-        <div style={{ marginTop: "20px" }}>
+        <div style={{ marginTop: "20px", display:"flex" , justifyContent:"space-evenly" , alignItems:"center" }}>
+        <Button>Click to calculate your total score</Button>
             <h3>Total Score: {totalScore}</h3>
+      
+        <Button onClick={showModal}>
+        Open Modal
+        </Button>
+        <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+          <ForeignWorkerStreamPdf answer={answer}/>
+        </Modal>
+          
+
           </div>
       </Form>
       </Content>
-      {/* <Sider width="25%" style={siderStyle}>
-          Sider
-        </Sider> */}
+      
     </>
 
   );

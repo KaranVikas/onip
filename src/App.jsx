@@ -6,6 +6,7 @@ import frCA from 'antd/locale/fr_CA';
 import enCA from 'antd/locale/en_US';
 import { Route, Routes } from 'react-router-dom';
 import ForeignWorkerStream from './pages/ForeginWorkerStream';
+import ForeignWorkerStreamPdf from './pages/ForeginWorkerStream/ForeginWorkerStreamPdf';
 import InDemandStream from './pages/InDemandStream';
 import InternationalStudentStream from './pages/InternationalStudentStream';
 import MasterStudentStream from './pages/MasterStream';
@@ -83,6 +84,7 @@ const App = () => {
             <Route path='/int_stream' element={<InternationalStudentStream />} />
             <Route path='/master_stream' element={<MasterStudentStream />} />
             <Route path='/phd_stream' element={<PHDStream /> }/>
+            <Route path='/foreign_worker_stream_pdf' element={<ForeignWorkerStreamPdf />} />
             <Route path='*' element={<h2>404 - Page not found</h2>} />
           </Routes>
           <Footer style={footerStyle}> This is footer</Footer>

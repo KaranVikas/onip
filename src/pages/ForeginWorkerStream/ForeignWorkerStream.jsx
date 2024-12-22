@@ -90,7 +90,7 @@ const ForeignWorkerStream = () => {
 
       const category = categoryMapping[question];
       if (!updatedAnswers[category]) {
-        updatedAnswers[category] = {}; //Create the category if it does n't exist
+        updatedAnswers[category] = {}; //Create the category if it doesn't exist
       }
       const previousScore = updatedAnswers[category][question]?.score || 0; // Retrieve the previous score
       updatedAnswers[category][question] = {
@@ -144,7 +144,11 @@ const ForeignWorkerStream = () => {
             maxWidth: 600,
           }}
         >
-          <Form.Item label="What is your current work or study permit status?">
+          <Form.Item
+            label={t(
+              "foreign_worker_stream.what_is_your_current_work_or_study_permit_status?",
+            )}
+          >
             <Select
               onChange={(value) => handleScoreChange("workPermitStatus", value)}
             >
@@ -157,7 +161,11 @@ const ForeignWorkerStream = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item label="What occupation do you have a job offer for?">
+          <Form.Item
+            label={t(
+              "foreign_worker_stream.What_occupation_do_you_have_a_job_offer_for?",
+            )}
+          >
             <Select
               onChange={(value) => handleScoreChange("occupation", value)}
             >
@@ -181,6 +189,7 @@ const ForeignWorkerStream = () => {
               <Select.Option value="$40 or higher">$40 or higher</Select.Option>
             </Select>
           </Form.Item>
+
           {/* <Form.Item label="What is the hourly wage of your job offer?">
           <Radio.Group>
             <Radio value="Less than $20"> Less than $20 </Radio>

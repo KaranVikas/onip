@@ -11,6 +11,7 @@ import InternationalStudentStream from "./pages/InternationalStudentStream";
 import MasterStudentStream from "./pages/MasterStream";
 import PHDStream from "./pages/PHDStream/PHDStream";
 import Home from "./pages/Home";
+import InStream from "./pages/Instream/InStream";
 
 const { Header, Footer } = Layout;
 
@@ -86,6 +87,7 @@ const App = () => {
             />
             <Route path="/master_stream" element={<MasterStudentStream />} />
             <Route path="/phd_stream" element={<PHDStream />} />
+            <Route path="/in_stream" element={<InStream />} />
 
             <Route path="*" element={<h2>404 - Page not found</h2>} />
           </Routes>

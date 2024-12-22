@@ -198,24 +198,24 @@ const PHDStream = () => {
     console.log({ answer });
   };
 
-  const nextQuestion = () => {
-    if (selectedValue) {
-      setAnswers((prevAnswers) => ({
-        ...prevAnswers,
-        [questions[currentQuestionIndex].key]: selectedValue,
-      }));
-    }
-    setSelectedValue("");
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
-  };
-
-  const prevQuestion = () => {
-    if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
-    }
-  };
+  // const nextQuestion = () => {
+  //   if (selectedValue) {
+  //     setAnswers((prevAnswers) => ({
+  //       ...prevAnswers,
+  //       [questions[currentQuestionIndex].key]: selectedValue,
+  //     }));
+  //   }
+  //   setSelectedValue("");
+  //   if (currentQuestionIndex < questions.length - 1) {
+  //     setCurrentQuestionIndex(currentQuestionIndex + 1);
+  //   }
+  // };
+  //
+  // const prevQuestion = () => {
+  //   if (currentQuestionIndex > 0) {
+  //     setCurrentQuestionIndex(currentQuestionIndex - 1);
+  //   }
+  // };
 
   return (
     <>
@@ -240,7 +240,7 @@ const PHDStream = () => {
           <Form.Item label={questions[currentQuestionIndex].label}>
             <Select
               style={{ width: "100%" }}
-              value={selectedValue}
+              // value={selectedValue}
               onChange={(value) =>
                 handleScoreChange(questions[currentQuestionIndex].key, value)
               }
@@ -253,48 +253,27 @@ const PHDStream = () => {
             </Select>
           </Form.Item>
 
-          {/* Navigation buttons*/}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Button
-              disabled={currentQuestionIndex === 0}
-              onClick={prevQuestion}
+          {currentQuestionIndex === questions.length - 1 && (
+            <div
+              style={{
+                marginTop: "20px",
+                display: "flex",
+                justifyContent: "center",
+              }}
             >
-              Previous
-            </Button>
-            <Button
-              disabled={currentQuestionIndex === questions.length - 1}
-              onClick={nextQuestion}
-            >
-              Next
-            </Button>
-          </div>
-          {/* Modal for Results */}
-          <div
-            style={{
-              marginTop: "20px",
-              display: "flex",
-              justifyContent: "space-evenly",
-              alignItems: "center",
-            }}
-          >
-            <h3>Total Score: {totalScore}</h3>
-            <Button onClick={() => setIsModalOpen(true)}>Open Report</Button>
-            <Modal
-              title="Score Card"
-              open={isModalOpen}
-              onOk={() => setIsModalOpen(false)}
-              onCancel={() => setIsModalOpen(false)}
-              width={700}
-            >
-              <PHDStreamPdf answer={answer} totalScore={totalScore} />
-            </Modal>
-          </div>
+              <h3>Total Score: {totalScore}</h3>
+              <Button onClick={() => setIsModalOpen(true)}>Open Report</Button>
+              <Modal
+                title="Score Card"
+                open={isModalOpen}
+                onOk={() => setIsModalOpen(false)}
+                onCancel={() => setIsModalOpen(false)}
+                width={700}
+              >
+                <PHDStreamPdf answer={answer} totalScore={totalScore} />
+              </Modal>
+            </div>
+          )}
         </Form>
       </Content>
     </>

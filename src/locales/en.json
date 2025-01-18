@@ -1,7 +1,88 @@
 {
-  "welcome": "Welcome to React!",
-  "language": "Language",
-  "switchLanguage": "Switch Language",
-  "name": "Name1",
-  "age": "Age2"
+  "common": {
+    "welcome": "Welcome to React!",
+    "language": "Language",
+    "switchLanguage": "Switch Language",
+    "foreign_worker_stream": "Foreign Worker Stream",
+    "in_demand_worker_stream": "In Demand Worker Stream",
+    "international_student_stream": "International Student Stream",
+    "masters_stream": "Master Stream",
+    "phd_stream": "PHD Stream",
+    "home": "Home"
+  },
+  "masters_stream": {
+  },
+  "phd_stream": {
+  },
+  "foreign_worker_stream": {
+    "what_is_your_current_work_or_study_permit_status?": "What is your current work or study permit status?",
+    "What_occupation_do_you_have_a_job_offer_for?": "What occupation do you have a job offer for?",
+    "What_is_the_hourly_wage_of_your_job_offer?": "What is the hourly wage of your job offer?",
+    "How_long_have_you_worked_in_your_job_offer_position?": "How long have you worked in your job offer position?",
+    "What_is_the_location_of_your_job_offer?": "What is the location of your job offer?",
+    "What_is_your_highest_Canadian_earnings_history_in_a_single_tax_year?": "What is your highest Canadian earnings history in a single tax year?",
+    "What_is_your_knowledge_of_Canada's_official_languages_(English_and_French)?": "What is your overall offical language ability in English and/or French?",
+    "What_is_your_overall_offical_language_ability_in_English_and/or_French?": "What is your overall offical language ability in English and/or French?"
+  },
+  "in_demand_worker_stream": {
+    "what_is_your_current_work_or_study_permit_status?": "What is your current work or study permit status?",
+    "What_occupation_do_you_have_a_job_offer_for?": "What occupation do you have a job offer for?",
+    "What_is_the_hourly_wage_of_your_job_offer?": "What is the hourly wage of your job offer?",
+    "How_long_have_you_worked_in_your_job_offer_position?": "How long have you worked in your job offer position?",
+    "What_is_the_location_of_your_job_offer?": "What is the location of your job offer?",
+    "What_is_your_highest_Canadian_earnings_history_in_a_single_tax_year?": "What is your highest Canadian earnings history in a single tax year?"
+  },
+  "international_student_stream": {
+    "what_is_your_current_work_or_study_permit_status?": "What is your current work or study permit status?",
+    "What_is_your_highest_level_of_education?": "What is your highest level of education?",
+    "What_was_the_field_of_study_of_your_educational_credential?": "What was the field of study of your educational credential?",
+    "What_is_your_Canadian_education_experience?": "What is your Canadian education experience?",
+    "Where_did_you_Study_in_Ontario?": "Where did you Study in Ontario?",
+    "What_occupation_do_you_have_a_job_offer_for?": "What occupation do you have a job offer for?",
+    "What_is_the_hourly_wage_of_your_job_offer?": "What is the hourly wage of your job offer?",
+    "How_long_have_you_worked_in_your_job_offer_position?": "How long have you worked in your job offer position?",
+    "What_is_the_location_of_your_job_offer?": "What is the location of your job offer?",
+    "What_is_your_highest_Canadian_earnings_history_in_a_single_tax_year?": "What is your highest Canadian earnings history in a single tax year?"
+  },
+  "master_stream": {
+    "What_is_your_current_work_or_study_permit_status?": "What is your current work or study permit status?",
+    "What_is_your_highest_level_of_education?": "What is your highest level of education?",
+    "What_was_the_field_of_study_of_your_educational_credential?": "What was the field of study of your educational credential?",
+    "What_is_your_Canadian_education_experience?": "What is your Canadian education experience?",
+    "Where_did_you_Study_in_Ontario?": "Where did you Study in Ontario?",
+    "What_is_your_highest_Canadian_earnings_history_in_a_single_tax_year?": "What is your highest Canadian earnings history in a single tax year?",
+    "What_is_your_knowledge_of_Canada's_official_languages_(English_and_French)?": "What is your knowledge of Canada's official languages (English and French)?",
+    "What_is_your_overall_official_language_ability_in_English_and/or_French?": "What is your overall official language ability in English and/or French?"
+  },
+  "options": {
+    "With_valid_work_permit": "With valid work permit",
+    "Without_valid_work_permit": "Without valid work permit",
+    "Less_than_college_or_trade_certificate": "Less than college or trade certificate",
+    "Apprenticeship_or_trades_certificate_or_diploma": "Apprenticeship or trades certificate or diploma",
+    "Undergraduate_diploma_or_certificate": "Undergraduate diploma or certificate",
+    "Graduate_diploma_or_certificate": "Graduate diploma or certificate",
+    "Bachelors_or_equivalent": "Bachelors or equivalent",
+    "Masters": "Masters",
+    "PhD": "PhD",
+    "STEM_health_(engineering_health_math_computer_science)": "STEM/health (engineering, health, math, computer science)",
+    "Trades_(agriculture_and_natural_resources_operations_and_management_mechanics_and_repair_architecture_construction_and_precision_production)": "Trades (agriculture and natural resources operations and management, mechanics and repair, architecture, construction and precision production)",
+    "Business_and_administration_social_legal_education_behavioral_science_personal_security_and_transport_services_social_work_and_related_programs": "Business and administration, social, legal, education, behavioral science, personal, security and transport services, social work and related programs",
+    "Arts_and_humanities_business_humanities_arts_social_science_and_education_(BHASE)_programs_not_elsewhere_classified_(n.e.c)": "Arts and humanities, business, humanities, arts, social science and education (BHASE) programs, not elsewhere classified (n.e.c)",
+    "More_than_one_Credential": "More than one Credential",
+    "One_Credential": "One Credential",
+    "None": "None",
+    "Northern_Ontario": "Northern Ontario",
+    "Other_areas_outside_Greater_Toronto_Area_(except_Northern_Ontario)": "Other areas outside Greater Toronto Area (except Northern Ontario)",
+    "Less_than_$40k_earnings_in_a_year": "Less than $40k earnings in a year",
+    "More_than_$40k_earnings_in_a_year": "More than $40k earnings in a year",
+    "Two_official_languages": "Two official languages",
+    "One_official_language": "One official language",
+    "Greater_Toronto_Area_excluding_Toronto": "Greater Toronto Area excluding Toronto",
+    "Toronto": "Toronto",
+    "Credential_was_completed_without_physically_attending_(in-person)_classes": "Credential was completed without physically attending (in-person) classes",
+    "CLB_9_or_higher": "CLB 9 or higher",
+    "CLB_8": "CLB 8",
+    "CLB_7": "CLB 7",
+    "CLB_6_or_lower": "CLB 6 or lower"
+  }
 }

@@ -21,7 +21,7 @@ const PHDStream = () => {
   const [answer, setAnswers] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedValue, setSelectedValue] = useState(""); // Tracks current question
+  const [visibleQuestions, setVisibleQuestions] = useState([0]);
 
   const questions = [
     {
@@ -157,8 +157,12 @@ const PHDStream = () => {
       Toronto: 0,
     },
   };
-  const handleScoreChange = (question, value) => {
-    console.log({ question, value });
+
+  const handleScoreChange = (question, value, event, questionIndex) => {
+    event.preventDefault();
+    console.log({ question, value, questionIndex });
+    const answer = event.target.elements.answer.value;
+
     const newScore = scoreMapping[question]?.[value] || 0; // Get the new score
 
     // Save answer to the answers state
@@ -186,36 +190,24 @@ const PHDStream = () => {
       }
       const previousScore = updatedAnswers[category][question]?.score || 0; // Retrieve the previous score
       updatedAnswers[category][question] = {
-        description: value,
+        description: answer,
         score: newScore,
       };
 
       // Update the total score
       setTotalScore((prevScore) => prevScore - previousScore + newScore);
+
+      if (questionIndex < questions.length - 1) {
+        setVisibleQuestions((prevVisibleQuestions) => [
+          ...prevVisibleQuestions,
+          questionIndex + 1,
+        ]);
+      }
+      event.target.reset();
       return updatedAnswers;
     });
-    console.log(newScore);
     console.log({ answer });
   };
-
-  // const nextQuestion = () => {
-  //   if (selectedValue) {
-  //     setAnswers((prevAnswers) => ({
-  //       ...prevAnswers,
-  //       [questions[currentQuestionIndex].key]: selectedValue,
-  //     }));
-  //   }
-  //   setSelectedValue("");
-  //   if (currentQuestionIndex < questions.length - 1) {
-  //     setCurrentQuestionIndex(currentQuestionIndex + 1);
-  //   }
-  // };
-  //
-  // const prevQuestion = () => {
-  //   if (currentQuestionIndex > 0) {
-  //     setCurrentQuestionIndex(currentQuestionIndex - 1);
-  //   }
-  // };
 
   return (
     <>
@@ -236,6 +228,41 @@ const PHDStream = () => {
             maxWidth: 600,
           }}
         >
+          Answer the Questions
+          {visibleQuestions.map((questionIndex) => (
+            <div key={questionIndex} style={{ marginBottom: "20px" }}>
+              <Form.Item
+                label={questions[currentQuestionIndex].label}
+                onChange={(value, event) =>
+                  handleScoreChange(
+                    questions[currentQuestionIndex].key,
+                    value,
+                    event,
+                    questionIndex,
+                  )
+                }
+              >
+                <Select
+                  style={{ width: "100%" }}
+                  // value={selectedValue}
+                  onChange={(value, event) =>
+                    handleScoreChange(
+                      questions[currentQuestionIndex].key,
+                      value,
+                      event,
+                      questionIndex,
+                    )
+                  }
+                >
+                  {questions[currentQuestionIndex].options.map((option) => (
+                    <Select.Option key={option} value={option}>
+                      {option}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </div>
+          ))}
           {/*    Render current question*/}
           <Form.Item label={questions[currentQuestionIndex].label}>
             <Select
@@ -252,7 +279,6 @@ const PHDStream = () => {
               ))}
             </Select>
           </Form.Item>
-
           {currentQuestionIndex === questions.length - 1 && (
             <div
               style={{

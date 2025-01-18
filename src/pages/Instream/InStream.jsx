@@ -1,60 +1,99 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { Button, Select } from "antd";
+
+const contentStyle = {
+  textAlign: "center",
+  minHeight: 120,
+  lineHeight: "120px",
+  padding: "20px 50px",
+  overflow: "scroll",
+};
 
 const InSteam = () => {
-  // Array of questions
-  const questions = [
-    "What is your name?",
-    "What is your favorite color?",
-    "Where do you live?",
-    "What is your favorite hobby?",
-  ];
+  const [questions, setQuestions] = useState([
+    {
+      id: 1,
+      text: "Work Experience",
+      answer: "",
+      options: ["Red", "Blue", "Green", "Yellow"],
+    },
+    {
+      id: 2,
+      text: "What is your favorite animal?",
+      answer: "",
+      options: ["Dog", "Cat", "Elephant", "Tiger"],
+    },
+    {
+      id: 3,
+      text: "What is your favorite food?",
+      answer: "",
+      options: ["Pizza", "Sushi", "Burger", "Salad"],
+    },
+    {
+      id: 4,
+      text: "What is your favorite food?",
+      answer: "",
+      options: ["Pizza", "Sushi", "Burger", "Salad"],
+    },
+    {
+      id: 5,
+      text: "What is your favorite food?",
+      answer: "",
+      options: ["Pizza", "Sushi", "Burger", "Salad"],
+    },
+  ]);
 
-  // State to track answers
-  const [answers, setAnswers] = useState([]);
-  const [visibleQuestions, setVisibleQuestions] = useState([0]); // Start with the first question visible
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
-  // Handle answer submission
-  const handleAnswerSubmit = (event, questionIndex) => {
-    event.preventDefault();
-    const answer = event.target.elements.answer.value;
-    if (answer.trim()) {
-      const updatedAnswers = [...answers];
-      updatedAnswers[questionIndex] = answer; // Update the answer for the current question
-      setAnswers(updatedAnswers);
+  const handleAnswerChange = (index, value) => {
+    const updatedQuestions = [...questions];
+    updatedQuestions[index].answer = value;
+    setQuestions(updatedQuestions);
+    console.log({ updatedQuestions });
+  };
 
-      // Show the next question if available
-      if (questionIndex < questions.length - 1) {
-        setVisibleQuestions([...visibleQuestions, questionIndex + 1]);
-      }
-      event.target.reset();
+  const handleNextQuestion = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      console.log("Current Question", currentQuestionIndex);
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
+    console.log(currentQuestionIndex);
+  };
+
+  const calculateScore = () => {
+    console.log("calculateScore");
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
-      <h2>Answer the Questions</h2>
-      {visibleQuestions.map((questionIndex) => (
-        <div key={questionIndex} style={{ marginBottom: "20px" }}>
-          <form onSubmit={(event) => handleAnswerSubmit(event, questionIndex)}>
-            <p>
-              <strong>Q{questionIndex + 1}:</strong> {questions[questionIndex]}
-            </p>
-            {answers[questionIndex] ? (
-              <p>
-                <strong>Answer:</strong> {answers[questionIndex]}
-              </p>
-            ) : (
-              <>
-                <input
-                  type="text"
-                  name="answer"
-                  placeholder="Type your answer"
-                  required
-                />
-                <button type="submit">Next</button>
-              </>
-            )}
-          </form>
+    <div style={contentStyle}>
+      <h1>Quiz</h1>
+      {questions.slice(0, currentQuestionIndex + 1).map((question, index) => (
+        <div key={question.id} style={{ marginBottom: "10px" }}>
+          <h3>{question.text}</h3>
+          <Select
+            style={{ width: "100%" }}
+            value={question.answer}
+            onChange={(value) => handleAnswerChange(index, value)}
+          >
+            {question.options.map((option, optionIndex) => (
+              <Select.Option key={optionIndex} value={option}>
+                {option}
+              </Select.Option>
+            ))}
+          </Select>
+          {currentQuestionIndex === index && (
+            <Button
+              onClick={
+                currentQuestionIndex === questions.length - 1
+                  ? calculateScore
+                  : handleNextQuestion
+              }
+            >
+              {currentQuestionIndex === questions.length - 1
+                ? "Calculate Score"
+                : "Next"}
+            </Button>
+          )}
         </div>
       ))}
     </div>

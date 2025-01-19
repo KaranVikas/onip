@@ -1,4 +1,4 @@
-import { Button, Form, Layout, Modal } from "antd";
+import { Button, Layout, Modal } from "antd";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
@@ -17,290 +17,167 @@ const contentStyle = {
 const PHDStream = () => {
   const { t } = useTranslation();
   const [componentSize, setComponentSize] = useState("default");
-  const [totalScore, setTotalScore] = useState(0);
-  const [answer, setAnswers] = useState({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [visibleQuestions, setVisibleQuestions] = useState([0]);
 
-  const questions = [
+  const [questions, setQuestions] = useState([
     {
       id: 1,
-      key: "workPermitStatus",
-      label: "What is your current work or study permit status?",
-      options: ["With valid work permit", "Without valid work permit"],
+      text: "What is your current work or study permit status?",
+      answer: "",
+      option: {
+        "With valid work permit": 10,
+        "Without valid work permit": 0,
+      },
     },
     {
       id: 2,
-      key: "highestLevelOfEducation",
-      label: "What is your highest level of education?",
-      options: [
-        "Less than college or trade certificate",
-        "Apprenticeship or trades certificate or diploma",
-        "Undergraduate diploma or certificate",
-        "Graduate diploma or certificate",
-        "Bachelors or equivalent",
-        "Masters",
-        "PhD",
-      ],
+      text: "What is your highest level of education?",
+      answer: "",
+      option: {
+        "Less than college or trade certificate": 0,
+        "Apprenticeship or trades certificate or diploma": 5,
+        "Undergraduate diploma or certificate": 5,
+        "Graduate diploma or certificate": 6,
+        "Bachelors or equivalent": 6,
+        Masters: 8,
+        PhD: 10,
+      },
     },
     {
       id: 3,
-      key: "fieldOfStudy",
-      label: "What was the field of study of your educational credential?",
-      options: [
-        "STEM/health (engineering, health, math, computer science)",
-        "Trades (agriculture and natural resources operations and management, mechanics and repair, architecture, construction and precision production)",
-        "Business and administration, social, legal, education, behavioral science, personal, security and transport services, social work and related programs",
-        "Arts and humanities, business, humanities, arts, social science and education (BHASE) programs, not elsewhere classified (n.e.c)",
-      ],
+      text: "What was the field of study of your educational credential?",
+      answer: "",
+      option: {
+        "STEM/health (engineering, health, math, computer science)": 12,
+        "Business and administration, social, legal, education, behavioral science, personal, security and transport services,social work and related programs": 6,
+        "Trades (agriculture and natural resources operations and management, mechanics and repair, architecture, construction and precision production)": 0,
+        "Arts and humanities, business, humanities, arts, social science and education (BHASE) programs, not elsewhere classified (n.e.c)": 0,
+      },
     },
     {
       id: 4,
-      key: "canadianEducationExperience",
-      label: "What is your Canadian education experience?",
-      options: ["More than one Credential", "One Credential", "None"],
+      text: "What is your Canadian education experience?",
+      answer: "",
+      option: {
+        "More than one Canadian credential": 10,
+        "One Canadian credential": 5,
+        None: 0,
+      },
     },
     {
       id: 5,
-      key: "studyLocation",
-      label: "Where did you Study in Ontario?",
-      options: [
-        "Northern Ontario",
-        "Other areas outside Greater Toronto Area (except Northern Ontario)",
-        "Greater Toronto Area excluding Toronto",
-        "Toronto",
-        "Credential was completed without physically attending (in-person) classes",
-      ],
+      text: "Where did you Study in Ontario??",
+      answer: "",
+      option: {
+        "Northern Ontario": 10,
+        "Other areas outside Greater Toronto Area (except Northern Ontario)": 8,
+        "Greater Toronto Area excluding Toronto": 3,
+        Toronto: 0,
+      },
     },
     {
       id: 6,
-      key: "earningHistory",
-      label:
-        "What is your highest canadian earnings history in a single tax year?",
-      options: [
-        "Less than $40k earnings in a year",
-        "More than $40k earnings in a year",
-      ],
+      text: "What is your highest Canadian earnings history in a single tax year?",
+      answer: "",
+      option: {
+        "Less than $40k earnings in a year": 0,
+        "More than $40k earnings in a year": 3,
+      },
     },
     {
       id: 7,
-      key: "languageKnowledge",
-      label:
-        "What is your knowledge of Canada's official languages (English and French)?",
-      options: ["Two official languages", "One official language"],
+      text: "What is your knowledge of Canada's official languages (English and French)?",
+      answer: "",
+      option: {
+        "Two official languages": 10,
+        "One official language": 5,
+      },
     },
     {
       id: 8,
-      key: "languageAbility",
-      label:
-        "What is your overall official language ability in English and/or French?",
-      options: ["CLB 9 or higher", "CLB 8", "CLB 7", "CLB 6 or lower"],
+      text: "What is your overall offical language ability in English and/or French?",
+      answer: "",
+      option: {
+        "CLB 9 or higher": 10,
+        "CLB 8": 8,
+        "CLB 7": 6,
+        "CLB 6 or lower": 0,
+      },
     },
-  ];
+  ]);
 
-  const scoreMapping = {
-    workPermitStatus: {
-      "With valid work permit": 10,
-      "Without valid work permit": 0,
-    },
-    occupation: {
-      "With valid work permit": 10,
-      "Without valid work permit": 0,
-    },
-    hourlyWage: {
-      "Less than $20": 0,
-      "$20 to $24.99": 5,
-      "$25 to $29.99": 6,
-      "$30 to $34.99": 7,
-      "$35 to $39.99": 8,
-      "$40 or higher": 10,
-    },
-    workDuration: {
-      "6 months or more": 3,
-      "Less than 6 months": 0,
-    },
-    jobLocation: {
-      "Northern Ontario": 10,
-      "Other areas outside Greater Toronto Area (except Northern Ontario)": 8,
-      "Greater Toronto Area excluding Toronto": 3,
-      Toronto: 0,
-    },
-    earningsHistory: {
-      "Less than $40k earnings in a year": 0,
-      "More than $40k earnings in a year": 3,
-    },
-    highestLevelOfEducation: {
-      "Less than college or trade certificate": 0,
-      "Apprenticeship or trades certificate or diploma": 5,
-      "Undergraduate diploma or certificate": 5,
-      "Graduate diploma or certificate": 6,
-      "Bachelors or equivalent": 6,
-      Masters: 8,
-      PhD: 10,
-    },
-    fieldOfStudy: {
-      "STEM/health (engineering, health, math, computer science)": 12,
-      "Business and administration, social, legal, education, behavioral science, personal, security and transport services,social work and related programs": 6,
-      "Trades (agriculture and natural resources operations and management, mechanics and repair, architecture, construction and precision production)": 0,
-      "Arts and humanities, business, humanities, arts, social science and education (BHASE) programs, not elsewhere classified (n.e.c)": 0,
-    },
-    canadianEducationExperience: {
-      "More than one Canadian credential": 10,
-      "One Canadian credential": 5,
-      None: 0,
-    },
-    studyLocation: {
-      "Northern Ontario": 10,
-      "Other areas outside Greater Toronto Area (except Northern Ontario)": 8,
-      "Greater Toronto Area excluding Toronto": 3,
-      Toronto: 0,
-    },
+  const handleAnswerChange = (index, value) => {
+    const updatedQuestions = [...questions];
+    updatedQuestions[index].answer = value;
+    setQuestions(updatedQuestions);
+    console.log({ updatedQuestions });
   };
 
-  const handleScoreChange = (question, value, event, questionIndex) => {
-    event.preventDefault();
-    console.log({ question, value, questionIndex });
-    const answer = event.target.elements.answer.value;
-
-    const newScore = scoreMapping[question]?.[value] || 0; // Get the new score
-
-    // Save answer to the answers state
-
-    setAnswers((prevAnswers) => {
-      const updatedAnswers = { ...prevAnswers };
-
-      //Nested logic
-      const categoryMapping = {
-        workPermitStatus: "Work Experience",
-        occupation: "Job Offer",
-        hourlyWage: "Job Offer",
-        workDuration: "Job Offer",
-        jobLocation: "Job Offer",
-        earningsHistory: "Earnings History",
-        highestLevelOfEducation: "Education History",
-        fieldOfStudy: "Education History",
-        canadianEducationExperience: "Education History",
-        studyLocation: "Education History",
-      };
-
-      const category = categoryMapping[question];
-      if (!updatedAnswers[category]) {
-        updatedAnswers[category] = {}; //Create the category if it does n't exist
-      }
-      const previousScore = updatedAnswers[category][question]?.score || 0; // Retrieve the previous score
-      updatedAnswers[category][question] = {
-        description: answer,
-        score: newScore,
-      };
-
-      // Update the total score
-      setTotalScore((prevScore) => prevScore - previousScore + newScore);
-
-      if (questionIndex < questions.length - 1) {
-        setVisibleQuestions((prevVisibleQuestions) => [
-          ...prevVisibleQuestions,
-          questionIndex + 1,
-        ]);
-      }
-      event.target.reset();
-      return updatedAnswers;
-    });
-    console.log({ answer });
+  const handleNextQuestion = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      console.log("Current Question", currentQuestionIndex);
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+    console.log(currentQuestionIndex);
   };
 
+  const calculateScore = () => {
+    const score = questions.reduce((total, question) => {
+      return total + (question.option[question.answer] || 0);
+    }, 0);
+    return score;
+  };
+
+  const totalScore = calculateScore();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <>
       <Helmet>
         <title>{t("phd_stream")}</title>
       </Helmet>
       <Content style={contentStyle}>
-        <Form
-          labelCol={{
-            span: 25,
-          }}
-          wrapperCol={{
-            span: 24,
-          }}
-          layout="vertical"
-          size={componentSize}
-          style={{
-            maxWidth: 600,
-          }}
-        >
-          Answer the Questions
-          {visibleQuestions.map((questionIndex) => (
-            <div key={questionIndex} style={{ marginBottom: "20px" }}>
-              <Form.Item
-                label={questions[currentQuestionIndex].label}
-                onChange={(value, event) =>
-                  handleScoreChange(
-                    questions[currentQuestionIndex].key,
-                    value,
-                    event,
-                    questionIndex,
-                  )
-                }
-              >
-                <Select
-                  style={{ width: "100%" }}
-                  // value={selectedValue}
-                  onChange={(value, event) =>
-                    handleScoreChange(
-                      questions[currentQuestionIndex].key,
-                      value,
-                      event,
-                      questionIndex,
-                    )
-                  }
-                >
-                  {questions[currentQuestionIndex].options.map((option) => (
-                    <Select.Option key={option} value={option}>
-                      {option}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </div>
-          ))}
-          {/*    Render current question*/}
-          <Form.Item label={questions[currentQuestionIndex].label}>
+        <h1>Quiz</h1>
+        {questions.slice(0, currentQuestionIndex + 1).map((question, index) => (
+          <div key={question.id} style={{ marginBottom: "10px" }}>
+            <h3>{question.text}</h3>
             <Select
               style={{ width: "100%" }}
-              // value={selectedValue}
-              onChange={(value) =>
-                handleScoreChange(questions[currentQuestionIndex].key, value)
-              }
+              value={question.answer}
+              onChange={(value) => handleAnswerChange(index, value)}
             >
-              {questions[currentQuestionIndex].options.map((option) => (
-                <Select.Option key={option} value={option}>
+              {Object.keys(question.option).map((option, index) => (
+                <Select.Option key={index} value={option}>
                   {option}
                 </Select.Option>
               ))}
             </Select>
-          </Form.Item>
-          {currentQuestionIndex === questions.length - 1 && (
-            <div
-              style={{
-                marginTop: "20px",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <h3>Total Score: {totalScore}</h3>
-              <Button onClick={() => setIsModalOpen(true)}>Open Report</Button>
-              <Modal
-                title="Score Card"
-                open={isModalOpen}
-                onOk={() => setIsModalOpen(false)}
-                onCancel={() => setIsModalOpen(false)}
-                width={700}
+            {currentQuestionIndex === index && (
+              <Button
+                onClick={
+                  currentQuestionIndex === questions.length - 1
+                    ? calculateScore
+                    : handleNextQuestion
+                }
               >
-                <PHDStreamPdf answer={answer} totalScore={totalScore} />
-              </Modal>
-            </div>
-          )}
-        </Form>
+                {currentQuestionIndex === questions.length - 1
+                  ? `Calculate Score`
+                  : "Next"}
+              </Button>
+            )}
+          </div>
+        ))}
+
+        <Button onClick={() => setIsModalOpen(true)}>Open Report</Button>
+        <Modal
+          title="Score Card"
+          open={isModalOpen}
+          onOk={() => setIsModalOpen(false)}
+          onCancel={() => setIsModalOpen(false)}
+          width={700}
+        >
+          <PHDStreamPdf answer={questions} totalScore={totalScore} />
+        </Modal>
       </Content>
     </>
   );

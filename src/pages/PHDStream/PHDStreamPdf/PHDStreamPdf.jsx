@@ -41,26 +41,26 @@ const PHDStreamPdf = ({ answer, totalScore }) => {
       <Document>
         <Page size="A4">
           <View style={styles.section}>
-            <Text style={{ marginBottom: "20px" }}>Foreign Worker Stream</Text>
+            <Text style={{ marginBottom: "20px" }}>PHD Worker Stream</Text>
             <Text style={{ marginBottom: "15px", textAlign: "center" }}>
               Your score report
             </Text>
 
-            {Object.keys(answer).map((category) => (
-              <View key={category} style={{ marginBottom: "15px" }}>
+            {answer.map((question, id) => (
+              <View key={id} style={{ marginBottom: "15px" }}>
                 <Text style={{ fontWeight: "bold", marginBottom: "20px" }}>
-                  {category}{" "}
+                  {question.answer}
                 </Text>
-                {Object.keys(answer[category]).map((subCategory) => (
-                  <View key={subCategory} style={styles.subcategory}>
-                    <Text style={{ marginLeft: "50px" }}>
-                      {answer[category][subCategory].description}
-                    </Text>
-                    <Text style={{}}>
-                      {answer[category][subCategory].score}
-                    </Text>
-                  </View>
-                ))}
+                {/*{Object.keys(answer[category]).map((subCategory) => (*/}
+                {/*  <View key={subCategory} style={styles.subcategory}>*/}
+                {/*    <Text style={{ marginLeft: "50px" }}>*/}
+                {/*      {answer[category][subCategory].description}*/}
+                {/*    </Text>*/}
+                {/*    <Text style={{}}>*/}
+                {/*      {answer[category][subCategory].score}*/}
+                {/*    </Text>*/}
+                {/*  </View>*/}
+                {/*))}*/}
               </View>
             ))}
 

@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Button, Select } from "antd";
+import { Button, Layout, Select } from "antd";
+
+const { Content } = Layout;
 
 const contentStyle = {
   textAlign: "center",
@@ -122,7 +124,7 @@ const InSteam = () => {
   };
 
   return (
-    <div style={contentStyle}>
+    <Content style={contentStyle}>
       <h1>Quiz</h1>
       {questions.slice(0, currentQuestionIndex + 1).map((question, index) => (
         <div key={question.id} style={{ marginBottom: "10px" }}>
@@ -153,7 +155,7 @@ const InSteam = () => {
           )}
         </div>
       ))}
-    </div>
+    </Content>
   );
 };
 

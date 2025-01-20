@@ -9,8 +9,8 @@ const { Content } = Layout;
 
 const contentStyle = {
   textAlign: "center",
-  minHeight: 120,
-  lineHeight: "120px",
+  minHeight: 10,
+  lineHeight: "15px",
   padding: "20px 50px",
   overflow: "scroll",
 };
@@ -140,9 +140,9 @@ const PHDStream = () => {
         <h1>Quiz</h1>
         {questions.slice(0, currentQuestionIndex + 1).map((question, index) => (
           <div key={question.id} style={{ marginBottom: "10px" }}>
-            <h3>{question.text}</h3>
+            <h4>{question.text}</h4>
             <Select
-              style={{ width: "100%" }}
+              style={{ width: "100%", lineHeight: "15px" }}
               value={question.answer}
               onChange={(value) => handleAnswerChange(index, value)}
             >

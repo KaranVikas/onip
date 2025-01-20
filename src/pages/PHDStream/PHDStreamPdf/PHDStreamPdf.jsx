@@ -29,6 +29,11 @@ const styles = StyleSheet.create({
   subcategoryText: {
     fontSize: 12,
   },
+  scoreSection: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: "15px",
+  },
 });
 
 // Create Document Component
@@ -47,9 +52,18 @@ const PHDStreamPdf = ({ answer, totalScore }) => {
             </Text>
 
             {answer.map((question, id) => (
-              <View key={id} style={{ marginBottom: "15px" }}>
+              <View key={id} style={styles.scoreSection}>
                 <Text style={{ fontWeight: "bold", marginBottom: "20px" }}>
                   {question.answer}
+                </Text>
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    marginBottom: "20px",
+                    marginLeft: "20px",
+                  }}
+                >
+                  {question.option[question.answer]}
                 </Text>
                 {/*{Object.keys(answer[category]).map((subCategory) => (*/}
                 {/*  <View key={subCategory} style={styles.subcategory}>*/}
